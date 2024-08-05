@@ -1,0 +1,6 @@
+[submodule "src/userplugins/FriendCodes"]
+	path = src/userplugins/FriendCodes
+	url = https://github.com/Domis-Vencord-Plugins/FriendCodes.git
+[submodule "src/userplugins/vc-gif-collections"]
+	path = src/userplugins/vc-gif-collections
+	url = https://github.com/Syncxv/vc-gif-collections
