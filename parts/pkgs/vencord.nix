@@ -60,7 +60,8 @@ stdenv.mkDerivation (finalAttrs: {
   installPhase = ''
     runHook preInstall
 
-    cp -r dist/extension-* $out
+    mkdir $out
+    cp -r dist/extension-* $out/
 
     runHook postInstall
   '';
