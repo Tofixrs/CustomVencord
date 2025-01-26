@@ -13,7 +13,7 @@ self': {
     ++ [
       (substituteAll {
         src = ./add-extension.patch;
-        vencord = self'.packages.custom-vencord;
+        vencord = self'.packages.custom-vencord.override {firefox = false;};
       })
     ];
 
