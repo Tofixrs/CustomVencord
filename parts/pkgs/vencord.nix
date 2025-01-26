@@ -7,10 +7,11 @@
   lib,
   nix-update,
   nodejs,
-  pnpm,
+  pnpm_9,
   stdenv,
   writeShellScript,
   buildWebExtension ? true,
+  firefox ? true,
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "custom-vencord";
@@ -18,16 +19,16 @@ stdenv.mkDerivation (finalAttrs: {
 
   src = ../../.;
 
-  pnpmDeps = pnpm.fetchDeps {
+  pnpmDeps = pnpm_9.fetchDeps {
     inherit (finalAttrs) pname src;
 
-    hash = "sha256-YBWe4MEmFu8cksOIxuTK0deO7q0QuqgOUc9WkUNBwp0=";
+    hash = "";
   };
 
   nativeBuildInputs = [
     git
     nodejs
-    pnpm.configHook
+    pnpm_9.configHook
   ];
 
   env = {
@@ -66,7 +67,11 @@ stdenv.mkDerivation (finalAttrs: {
   installPhase = ''
     runHook preInstall
 
-    cp -r dist/${lib.optionalString buildWebExtension "chromium-unpacked/"} $out
+    cp -r dist/${lib.optionalString buildWebExtension (
+      if !firefox
+      then "chromium-unpacked/"
+      else "firefox-unpacked/"
+    )} $out
 
     runHook postInstall
   '';
