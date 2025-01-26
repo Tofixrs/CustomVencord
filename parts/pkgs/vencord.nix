@@ -11,7 +11,6 @@
   stdenv,
   writeShellScript,
   buildWebExtension ? true,
-  firefox ? true,
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "custom-vencord";
@@ -67,11 +66,7 @@ stdenv.mkDerivation (finalAttrs: {
   installPhase = ''
     runHook preInstall
 
-    cp -r dist/${lib.optionalString buildWebExtension (
-      if !firefox
-      then "chromium-unpacked/"
-      else "firefox-unpacked/"
-    )} $out
+    cp -r dist/${lib.optionalString buildWebExtension "firefox-unpacked/"} $out
 
     runHook postInstall
   '';

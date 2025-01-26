@@ -4,7 +4,7 @@ _: {
     self',
     ...
   }: {
-    packages.default = pkgs.callPackage (import ./webcord-vencord self') {};
     packages.custom-vencord = pkgs.callPackage ./vencord.nix {};
+    packages.default = self'.packages.custom-vencord;
   };
 }
