@@ -66,7 +66,8 @@ stdenv.mkDerivation (finalAttrs: {
   installPhase = ''
     runHook preInstall
 
-    cp -r dist/${lib.optionalString buildWebExtension "firefox-unpacked/"} $out
+    cp -r dist/${lib.optionalString buildWebExtension "extension-*"} $out
+    cp -r dist/${lib.optionalString buildWebExtension "chromium-unpacked/"} $out
 
     runHook postInstall
   '';
