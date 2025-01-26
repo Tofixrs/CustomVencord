@@ -10,7 +10,6 @@
   pnpm_9,
   stdenv,
   writeShellScript,
-  buildWebExtension ? true,
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "custom-vencord";
@@ -53,12 +52,7 @@ stdenv.mkDerivation (finalAttrs: {
   buildPhase = ''
     runHook preBuild
 
-    pnpm run ${
-      if buildWebExtension
-      then "buildWeb"
-      else "build"
-    } \
-      -- --standalone --disable-updater
+    pnpm run buildWeb -- --standalone --disable-updater
 
     runHook postBuild
   '';
@@ -66,8 +60,7 @@ stdenv.mkDerivation (finalAttrs: {
   installPhase = ''
     runHook preInstall
 
-    cp -r dist/${lib.optionalString buildWebExtension "extension-*"} $out
-    cp -r dist/${lib.optionalString buildWebExtension "chromium-unpacked/"} $out
+    cp -r dist/extension-* $out
 
     runHook postInstall
   '';
